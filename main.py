@@ -21,7 +21,7 @@ def request_download_path() -> str:
 def get_download_path() -> str:
     path: str = ""
     for i in range(0, len(sys.argv)):
-        if sys.argv[i].replace("-", "").strip() == "d" or sys.argv[i].replace("-", "").strip() == "download":
+        if sys.argv[i].replace("-", "").strip() == "d" or sys.argv[i].replace("--", "").strip() == "download":
             path: str = sys.argv[i + 1]
             if path[0] == "~":
                 path = os.path.expanduser(path)
@@ -43,7 +43,7 @@ def request_template_path() -> str:
 def get_template_path() -> str:
     path: str = ""
     for i in range(0, len(sys.argv)):
-        if sys.argv[i].replace("-", "").strip() == "t" or sys.argv[i].replace("-", "").strip() == "template":
+        if sys.argv[i].replace("-", "").strip() == "t" or sys.argv[i].replace("--", "").strip() == "template":
             path: str = sys.argv[i + 1]
             if path[0] == "~":
                 path = os.path.expanduser(path)
@@ -105,7 +105,7 @@ def request_save_path() -> str:
 def get_save_path() -> str:
     path: str = ""
     for i in range(0, len(sys.argv)):
-        if sys.argv[i].replace("-", "").strip() == "s" or sys.argv[i].replace("-", "").strip() == "save":
+        if sys.argv[i].replace("-", "").strip() == "s" or sys.argv[i].replace("--", "").strip() == "save":
             path: str = sys.argv[i + 1]
             if path[0] == "~":
                 path = os.path.expanduser(path)
