@@ -115,7 +115,7 @@ def get_save_path() -> str:
             return path
     return request_save_path()
 
-def write_text(edited_text, downloaded_document) -> None:
+def write_text(edited_text, downloaded_document, save_path = "") -> None:
     first_paragraph = downloaded_document.paragraphs[0]
     #style = downloaded_document.styles['Normal'] # Unworking feature, fix later.
     #style.font.name = 'Times New Roman'
@@ -129,29 +129,47 @@ def write_text(edited_text, downloaded_document) -> None:
     today = str(date.today()).replace("-", ".")
     first_name = input("Please enter your first name: ").strip().lower()
     writer_lname = input("Please enter the writer's last name: ").strip().lower()
-    save_path = get_save_path()
+    if save_path == "":
+        save_path = get_save_path()
     downloaded_document.save(f"{save_path}{first_name}_OWL_{writer_lname}_{today}.docx")
 
 def parse_config():
-    settings: list = []
+    download_path: str = ""
+    template_path: str = ""
+    save_path: str = ""
     with open(config_path, "r") as config:
         for line in config:
-            if ("download" in line):
-                settings.append(line.replace("download = ", "").strip())
-                print(settings)
+            if ("download_path" in line):
+                download_path = line.replace("download_path = ", "").strip()
+                if download_path[0] == "~":
+                    download_path = os.path.expanduser(download_path)
+            elif ("template_path" in line):
+                template_path = line.replace("template_path = ", "").strip()
+                if template_path[0] == "~":
+                    template_path = os.path.expanduser(template_path)
+            elif ("save_path" in line):
+                save_path = line.replace("save_path = ", "").strip()
+                if save_path[0] == "~":
+                    save_path = os.path.expanduser(save_path)
+    return download_path, template_path, save_path
 
 
 def main():
+    download_path: str = ""
+    template_path: str = ""
+    save_path: str = ""
     if does_config_exist:
-        parse_config()
-    else:
+        download_path, template_path, save_path = parse_config()
+    if download_path == "":
         download_path: str = get_download_path()
-        downloaded_document = Document(download_path)
+    print(download_path)
+    downloaded_document = Document(download_path)
+    if template_path == "":
         template_path: str = get_template_path()
-        template_document = Document(template_path)
-        template_text = select_editable_region(template_document)
-        edited_text = find_edit_regions(template_text)
-        write_text(edited_text, downloaded_document)
+    template_document = Document(template_path)
+    template_text = select_editable_region(template_document)
+    edited_text = find_edit_regions(template_text)
+    write_text(edited_text, downloaded_document, save_path)
 
 if __name__ == "__main__":
     main()
