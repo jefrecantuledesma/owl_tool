@@ -13,7 +13,7 @@ there are fillable regions. Fillable regions are marked with an opening
 "<" and a closing ">". Also, this script is only compatible with .docx files</p>
 
 ### Configuration
-<p>This script will check, by default the "~/.config/owl_tool/config" file. You can
+<p>This script will check, by default, the "~/.config/owl_tool/config" file. You can
 save your download, template, and save path using the following format: "download_path = path"</p>
 
 <p>These paths can also be passed using flags. "-s" or "--save" for the save path, 
