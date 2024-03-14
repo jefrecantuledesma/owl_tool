@@ -21,3 +21,16 @@ These paths can also be passed using flags. `-s` or `--save` for the save path,
 
 Finally, if no paths are passed, or if no config file is found, then the user
 will be prompted for these variables when running the script.
+
+## Installation
+You can clone this package using `git clone https://github.com/jefrecantuledesma/owl_tool`. 
+From there, you must have `python-docs` installed. This can be done by running:
+```
+pip install python-docx
+```
+Or, if you're running Arch:
+```
+pacman -S python-docx
+```
+
+From there, all you must do is `python main.py`, and you're good to go!
